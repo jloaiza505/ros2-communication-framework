@@ -24,12 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'talker_node = talker_pkg.talker_node:main',
         ],
     },
-),
-
-entry_points={
-    'console_scripts': [
-        'talker_node = talker_pkg.talker_node:main',
-    ],
-},
+)

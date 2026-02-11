@@ -24,12 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'listener_node = listener_pkg.listener_node:main',
         ],
     },
-),
-
-entry_points={
-    'console_scripts': [
-        'listener_node = listener_pkg.listener_node:main',
-    ],
-},
+)

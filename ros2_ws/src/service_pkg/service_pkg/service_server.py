@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from service_pkg.srv import ToggleMessage
+from std_srvs.srv import SetBool
 
 
 class ServiceServer(Node):
@@ -11,7 +11,7 @@ class ServiceServer(Node):
         self.enabled = True
 
         self.srv = self.create_service(
-            ToggleMessage,
+            SetBool,
             'toggle_talker',
             self.handle_toggle
         )
@@ -19,10 +19,11 @@ class ServiceServer(Node):
         self.get_logger().info("Service server ready.")
 
     def handle_toggle(self, request, response):
-        self.enabled = request.toggle
-        response.status = f"Talker enabled: {self.enabled}"
+        self.enabled = request.data
+        response.success = True
+        response.message = f"Talker enabled: {self.enabled}"
 
-        self.get_logger().info(response.status)
+        self.get_logger().info(response.message)
         return response
 
 

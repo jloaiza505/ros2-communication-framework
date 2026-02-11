@@ -24,23 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'service_server = service_pkg.service_server:main',
+            'service_client = service_pkg.service_client:main',
         ],
     },
-),
-
-from glob import glob
-
-data_files=[
-    ('share/ament_index/resource_index/packages',
-        ['resource/service_pkg']),
-    ('share/service_pkg', ['package.xml']),
-    ('share/service_pkg/srv', glob('srv/*.srv')),
-],
-
-entry_points={
-    'console_scripts': [
-        'service_server = service_pkg.service_server:main',
-        'service_client = service_pkg.service_client:main',
-    ],
-},
-
+)
