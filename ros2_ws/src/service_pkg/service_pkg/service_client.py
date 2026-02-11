@@ -1,7 +1,23 @@
+import sys
+
 import rclpy
 from rclpy.node import Node
 from std_srvs.srv import SetBool
-import sys
+
+
+def parse_toggle_value(argv):
+    if len(argv) <= 1:
+        return True
+
+    value = argv[1].strip().lower()
+    if value in ('true', '1', 'yes', 'on'):
+        return True
+    if value in ('false', '0', 'no', 'off'):
+        return False
+
+    raise ValueError(
+        "Invalid toggle value. Use true/false (or 1/0, yes/no, on/off)."
+    )
 
 
 class ServiceClient(Node):
@@ -28,9 +44,13 @@ def main(args=None):
     rclpy.init(args=args)
     node = ServiceClient()
 
-    toggle_value = True
-    if len(sys.argv) > 1:
-        toggle_value = sys.argv[1].lower() == "true"
+    try:
+        toggle_value = parse_toggle_value(sys.argv)
+    except ValueError as exc:
+        node.get_logger().error(str(exc))
+        node.destroy_node()
+        rclpy.shutdown()
+        raise SystemExit(2) from exc
 
     response = node.send_request(toggle_value)
     node.get_logger().info(
