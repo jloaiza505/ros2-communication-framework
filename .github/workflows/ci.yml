@@ -21,7 +21,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            python3-rpyutils \
+            ros-humble-rpyutils \
             ros-humble-ament-copyright \
             ros-humble-ament-flake8 \
             ros-humble-ament-pep257
