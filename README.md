@@ -13,7 +13,6 @@ Robotic systems are distributed software systems. This repository focuses on cor
 - `service_pkg`: exposes `toggle_talker` (`std_srvs/SetBool`) and broadcasts talker state on `talker_enabled`
 - Parameterized talker node (`message_prefix`, `publish_period_sec`)
 - Single launch entrypoint for system bringup
-- Lint + unit tests with `colcon test`
 
 ## Architecture
 
@@ -24,7 +23,6 @@ See `docs/architecture.md` for node/topic/service flow.
 - ROS2 Humble
 - Python (`rclpy`)
 - `colcon`
-- `pytest` + ROS2 ament linters
 
 ## Quickstart
 
@@ -59,13 +57,12 @@ ros2 run service_pkg service_client true
 
 ## Verification
 
-Run all tests:
+Check node communication after launch:
 
 ```bash
-cd ros2_ws
-source install/setup.bash
-colcon test --event-handlers console_direct+
-colcon test-result --verbose
+ros2 topic echo /chatter
+ros2 service call /toggle_talker std_srvs/srv/SetBool "{data: false}"
+ros2 service call /toggle_talker std_srvs/srv/SetBool "{data: true}"
 ```
 
 ## Repository Layout
@@ -78,8 +75,6 @@ ros2_ws/
     service_pkg/
 docs/
   architecture.md
-.github/workflows/
-  ci.yml
 ```
 
 ## Troubleshooting

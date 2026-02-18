@@ -17,11 +17,6 @@ setup(
     maintainer_email='jloaiza505@gmail.com',
     description='ROS2 publisher node for periodic chatter topic output.',
     license='MIT',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
     entry_points={
         'console_scripts': [
             'talker_node = talker_pkg.talker_node:main',

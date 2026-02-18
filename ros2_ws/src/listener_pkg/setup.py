@@ -17,11 +17,6 @@ setup(
     maintainer_email='jloaiza505@gmail.com',
     description='ROS2 subscriber node for consuming chatter topic output.',
     license='MIT',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
     entry_points={
         'console_scripts': [
             'listener_node = listener_pkg.listener_node:main',

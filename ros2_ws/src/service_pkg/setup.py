@@ -19,11 +19,6 @@ setup(
     maintainer_email='jloaiza505@gmail.com',
     description='ROS2 SetBool service package for enabling and disabling the talker.',
     license='MIT',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
     entry_points={
         'console_scripts': [
             'service_server = service_pkg.service_server:main',
