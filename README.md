@@ -1,63 +1,56 @@
 # ROS2 Communication Framework
 
-A modular ROS2 (Humble) project that demonstrates publish/subscribe messaging, service-driven coordination, parameter handling, and launch-based orchestration across multiple Python packages.
+A modular ROS2 project demonstrating pub/sub messaging, service-driven coordination, parameter handling, and launch-based orchestration.
 
-## Why This Project
+## Packages
 
-Robotic systems are distributed software systems. This repository focuses on core ROS2 communication patterns in a structure that is easy to extend and review in a portfolio.
+- `talker_pkg`: publishes messages on `/chatter`
+- `listener_pkg`: subscribes to `/chatter`
+- `service_pkg`: exposes `/toggle_talker` (`std_srvs/SetBool`) and publishes talker state on `/talker_enabled`
 
-## Features
+## Workspace Layout
 
-- `talker_pkg`: publishes messages on `chatter`
-- `listener_pkg`: subscribes to `chatter`
-- `service_pkg`: exposes `toggle_talker` (`std_srvs/SetBool`) and broadcasts talker state on `talker_enabled`
-- Parameterized talker node (`message_prefix`, `publish_period_sec`)
-- Single launch entrypoint for system bringup
+```text
+src/
+  talker_pkg/
+  listener_pkg/
+  service_pkg/
+docs/
+  architecture.md
+```
 
-## Architecture
-
-See `docs/architecture.md` for node/topic/service flow.
-
-## Tech Stack
-
-- ROS2 Humble
-- Python (`rclpy`)
-- `colcon`
-
-## Quickstart
-
-From repository root:
+## Build
 
 ```bash
-cd ros2_ws
-colcon build --symlink-install
+source /opt/ros/jazzy/setup.bash
+colcon build --base-paths src
 source install/setup.bash
 ```
 
-Launch all core nodes:
+## Run
 
 ```bash
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
 ros2 launch service_pkg framework.launch.py
 ```
 
-Optional launch arguments:
+Optional launch args:
 
 ```bash
 ros2 launch service_pkg framework.launch.py message_prefix:="Portfolio Demo" publish_period_sec:=0.5
 ```
 
-Toggle talker publishing from another terminal:
+## Service Toggle
 
 ```bash
-cd ros2_ws
+source /opt/ros/jazzy/setup.bash
 source install/setup.bash
 ros2 run service_pkg service_client false
 ros2 run service_pkg service_client true
 ```
 
-## Verification
-
-Check node communication after launch:
+## Verify
 
 ```bash
 ros2 topic echo /chatter
@@ -65,33 +58,25 @@ ros2 service call /toggle_talker std_srvs/srv/SetBool "{data: false}"
 ros2 service call /toggle_talker std_srvs/srv/SetBool "{data: true}"
 ```
 
-## Repository Layout
+## CI
 
-```text
-ros2_ws/
-  src/
-    talker_pkg/
-    listener_pkg/
-    service_pkg/
-docs/
-  architecture.md
-```
+GitHub Actions workflow: `.github/workflows/ci.yml`
+- ROS 2 Jazzy setup
+- `rosdep install --from-paths src --ignore-src -r -y`
+- `colcon build --base-paths src`
+- `colcon test --base-paths src`
+- `colcon test-result --verbose`
 
 ## Troubleshooting
 
-If executables are missing, rebuild and re-source:
+If you see `Package 'service_pkg' not found`, rebuild and re-source:
 
 ```bash
-cd ros2_ws
+source /opt/ros/jazzy/setup.bash
 rm -rf build install log
-colcon build --symlink-install
+colcon build --base-paths src
 source install/setup.bash
-```
-
-If ROS2 cannot resolve packages, confirm:
-
-```bash
-ros2 pkg list | rg 'talker_pkg|listener_pkg|service_pkg'
+ros2 pkg prefix service_pkg
 ```
 
 ## License

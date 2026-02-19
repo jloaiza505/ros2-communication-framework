@@ -2,12 +2,12 @@
 
 ## Development Setup
 
-1. Use Ubuntu 22.04 with ROS2 Humble installed.
+1. Use Ubuntu 24.04 with ROS 2 Jazzy installed.
 2. Build from workspace root:
 
 ```bash
-cd ros2_ws
-colcon build --symlink-install
+source /opt/ros/jazzy/setup.bash
+colcon build --base-paths src
 source install/setup.bash
 ```
 
@@ -22,15 +22,15 @@ source install/setup.bash
 Run before opening a PR:
 
 ```bash
-cd ros2_ws
+source /opt/ros/jazzy/setup.bash
 source install/setup.bash
-colcon test --event-handlers console_direct+
+colcon test --base-paths src
 colcon test-result --verbose
 ```
 
 ## Pull Request Checklist
 
-- [ ] Build succeeds with `colcon build --symlink-install`
-- [ ] Tests pass with `colcon test`
+- [ ] Build succeeds with `colcon build --base-paths src`
+- [ ] Tests pass with `colcon test --base-paths src`
 - [ ] New behavior is documented
 - [ ] `CHANGELOG.md` updated for user-visible changes

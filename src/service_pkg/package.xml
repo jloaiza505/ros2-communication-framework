@@ -7,6 +7,8 @@
   <maintainer email="jloaiza505@gmail.com">james</maintainer>
   <license>MIT</license>
 
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
   <depend>std_srvs</depend>
@@ -16,7 +18,6 @@
   <exec_depend>listener_pkg</exec_depend>
 
   <export>
-    <build_type>ament_python</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
-  
 </package>

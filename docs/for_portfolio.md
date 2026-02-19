@@ -28,7 +28,7 @@ Nodes and interfaces:
 ![Optional demo - runtime toggle behavior](assets/gifs/ros2-comm-framework-toggle-demo.gif)
 
 ## Technical Implementation
-`ros2_ws/src/service_pkg/launch/framework.launch.py` starts:
+`src/service_pkg/launch/framework.launch.py` starts:
 - `talker_node`
 - `listener_node`
 - `service_server`
@@ -45,7 +45,7 @@ Flow:
 5. Talker updates its internal state.
 
 ### Software Stack
-- ROS 2 Humble
+- ROS 2 Jazzy (CI target)
 - Python with `rclpy`
 - `std_msgs` and `std_srvs`
 - `colcon`
@@ -75,8 +75,7 @@ Evidence images:
 From repository root:
 
 ```bash
-cd ros2_ws
-colcon build --symlink-install
+colcon build --base-paths src
 source install/setup.bash
 ros2 launch service_pkg framework.launch.py
 ```
@@ -84,7 +83,6 @@ ros2 launch service_pkg framework.launch.py
 Run with custom launch parameters:
 
 ```bash
-cd ros2_ws
 source install/setup.bash
 ros2 launch service_pkg framework.launch.py message_prefix:="Portfolio Demo" publish_period_sec:=0.5
 ```
@@ -92,7 +90,6 @@ ros2 launch service_pkg framework.launch.py message_prefix:="Portfolio Demo" pub
 Toggle talker state from another terminal:
 
 ```bash
-cd ros2_ws
 source install/setup.bash
 ros2 run service_pkg service_client false
 ros2 run service_pkg service_client true
@@ -103,14 +100,15 @@ ros2 run service_pkg service_client true
 Key files for replication:
 - `README.md`
 - `docs/architecture.md`
-- `ros2_ws/src/service_pkg/launch/framework.launch.py`
-- `ros2_ws/src/talker_pkg/talker_pkg/talker_node.py`
-- `ros2_ws/src/listener_pkg/listener_pkg/listener_node.py`
-- `ros2_ws/src/service_pkg/service_pkg/service_server.py`
-- `ros2_ws/src/service_pkg/service_pkg/service_client.py`
-- `ros2_ws/src/talker_pkg/package.xml`
-- `ros2_ws/src/listener_pkg/package.xml`
-- `ros2_ws/src/service_pkg/package.xml`
+- `src/service_pkg/launch/framework.launch.py`
+- `src/talker_pkg/talker_pkg/talker_node.py`
+- `src/listener_pkg/listener_pkg/listener_node.py`
+- `src/service_pkg/service_pkg/service_server.py`
+- `src/service_pkg/service_pkg/service_client.py`
+- `src/talker_pkg/package.xml`
+- `src/listener_pkg/package.xml`
+- `src/service_pkg/package.xml`
+- `.github/workflows/ci.yml`
 
 ## What to Improve
 - Add QoS settings as launch/parameter options for experimentation
